@@ -4,43 +4,159 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
 
-GPins = [12,11,13,15]
-revGPins = [15,13,11,12]
+global time_lp,temp
+temp = True
+time_lp = 0
 
+fs_revGPins = [12,13,11,15]
+fs_GPins = [15,11,13,12]
+
+hs_revGPins = [13,11,15,12]
+hs_GPins = [12,15,11,13]
 
 HOST = '192.168.35.213'
 
-seq = [[1,1,0,0],
-       [0,1,1,0],
-       [0,0,1,1],
-       [1,0,0,1]]
+def time_convert(sec):
+    mins = sec//60
+    sec = sec%60
+    hours = mins//60
+    mins = mins%60
+    return "{0}:{1}".format(int(mins),round(sec,2))
 
-for pin in GPins:
-    GPIO.setup(pin,GPIO.OUT)
-    GPIO.output(pin,0)
 
-rotationNeeded=0
-rotationCount=0
+def fs_forward():
+    GPins = fs_GPins
+    
+    for pin in GPins:
+        GPIO.setup(pin,GPIO.OUT)
+        GPIO.output(pin,0)
+    return GPins
+
+def fs_backward():
+    GPins = fs_revGPins
+    for pin in GPins:
+        GPIO.setup(pin,GPIO.OUT)
+        GPIO.output(pin,0)
+    return GPins
+def hs_forward():
+    GPins = hs_GPins
+    for pin in GPins:
+        GPIO.setup(pin,GPIO.OUT)
+        GPIO.output(pin,0)
+    return GPins
+def hs_backward():
+    GPins = hs_revGPins
+    for pin in GPins:
+        GPIO.setup(pin,GPIO.OUT)
+        GPIO.output(pin,0)
+    return GPins
+
+def full_step():
+    seq = [[1,1,0,0],
+           [0,1,1,0],
+           [0,0,1,1],
+           [1,0,0,1]]
+    return seq
+def half_step():
+    seq =  [[1,0,0,0],
+            [1,1,0,0],
+            [0,1,0,0],
+            [0,1,1,0],
+            [0,0,1,0],
+            [0,0,1,1],
+            [0,0,0,1],
+            [1,0,0,1]]  
+    return seq
+    
+def movement(stepCount,count,pin_order,seq,base,rpm):
+    for i in range(stepCount):
+            for step_type in range(count):
+                for pin in range(4):
+                    GPIO.output(pin_order[pin],seq[step_type][pin])
+                    time.sleep(base/rpm)
+
+@route('/static/<filepath:path>')
+def serve_files(filepath):
+    return static_file(filepath, root='/home/pi/Linear_Actuator/static')
+
 
 @route('/')
 def index():
-    return template('/home/pi/Linear_Actuator/main.tpl')
+    
+    if temp:
+        time_lapse = 0
+    else:
+        time_lapse = time_lp
+    
+    my_data = {
+        'time_lapse': time_lapse
+        }
+    print(time_lp)
+    return template('/home/pi/Linear_Actuator/main.tpl', **my_data)
 
 
 @route('/Stepper_motor', method='POST')
 def Stepper_motor():
     stepCount = request.forms.get('steps')
     rpm = request.forms.get('rpm')
+    stepType = request.forms.get('step_type')
+    direction = request.forms.get('direction')
+    checkbox = request.forms.get('breathe')
+    
+    checkbox = bool(checkbox)
     stepCount = int(stepCount)
     rpm = rpm = int(rpm)
-    count = 4
-    base = .075
+    stepType = int(stepType)
+    direction = int(direction)
     
-    for i in range(stepCount):
-        for step_type in range(count):
-            for pin in range(4):
-                GPIO.output(GPins[pin],seq[step_type][pin])
-                time.sleep(base/rpm)
+    if checkbox:
+        breaths = request.forms.get('number_breaths')
+        breaths = int(breaths)
+    else:
+        breaths = None
+    
+    
+    if direction == 1:
+        if stepType == 1:
+            pin_order = fs_forward()
+            rev_pin_order = fs_backward()
+            seq = full_step()
+            base = .075
+            count = 4
+        elif stepType ==0:
+            pin_order = hs_forward()
+            rev_pin_order = hs_backward()
+            seq = half_step()
+            base = .0375
+            count = 8
+    elif direction == 0:
+        if stepType ==1:
+            pin_order = fs_backward()
+            rev_pin_order = fs_forward()
+            seq = full_step()
+            base = .075
+            count = 4
+        elif stepType == 0:
+            pin_order = hs_backward()
+            rev_pin_order = hs_forward()
+            seq = half_step()
+            base = .0375
+            count = 8
+    global temp
+    temp = False
+    global time_lp
+    if breaths == None:
+        start_time = time.time()
+        movement(stepCount,count,pin_order,seq,base,rpm)
+        end_time = time.time()
+        time_lp = time_convert(end_time-start_time)
+    elif breaths != None:
+        for number in range(breaths):
+            start_time = time.time()
+            movement(stepCount,count,pin_order,seq,base,rpm)
+            movement(stepCount,count,rev_pin_order,seq,base,rpm)
+            end_time = time.time()
+            time_lp = time_convert(end_time-start_time)
     redirect("/")
 
     
