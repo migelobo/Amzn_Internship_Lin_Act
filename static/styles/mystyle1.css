@@ -19,6 +19,26 @@ label{
 	font-family: Cambria;
 }
 
+table{
+  border-collapse: collapse;
+  border-style: solid;
+  font-family: Arial, sans-serif;
+
+}
+
+th,td{
+  text-align: left;
+  padding: 8px
+}
+tr:nth-child(even){background-color: #ba7900;}
+tr:hover{background-color: #f0db3b;}
+th{
+  background-color: #0F2D49;
+  color: antiquewhite;
+}
+
+
+
 .myButton {
 	background-color:#FFD588;
 	border-radius:23px;
@@ -52,14 +72,14 @@ input[type="radio"] + label {
 }
 
 .one {
-  width: 50%;
+  width: 30%;
   height: 200px;
   float: left;
   padding: 0 70px;
 }
 
 .two {
-  margin-left: 60%;
+  margin-left: 30%;
   height: 200px;
   
 }
