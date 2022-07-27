@@ -46,7 +46,7 @@
 		<label for="breathe" >Enable Breathing </label><br>
 		
 		<label for="number_breaths" id="breath_label" style="display:none;" >Number of breaths:</label>
-			<input type="text" id="number_breaths" style="display:none;" name="number_breaths"><br><br>
+			<input type="text" id="number_breaths" style="display:none;" name="number_breaths"><br>
 			
 		 <input type="submit" class="myButton" value="Submit"><br>
 		
@@ -57,6 +57,38 @@
 	
 	<section class="container">
 	<div class="two">
-		<label>Time Lapsed: {{time_lapse}} </label><br>
+		<table>
+			<tr>
+				<th>Breathing Pattern</th>
+				<th>Steps</th>
+				<th>RPM</th>
+				<th>Step Type</th>
+			</tr>
+			<tr>
+				<td>Adult</td>
+				<td>50</td>
+				<td>5</td>
+				<td>Full-step</td>
+			</tr>
+			<tr>
+				<td>Stressed Adult</td>
+				<td>60</td>
+				<td>8</td>
+				<td>Full-step</td>
+			</tr>
+			<tr>
+				<td>Elder</td>
+				<td>30</td>
+				<td>3</td>
+				<td>Half-step</td>				
+			</tr>
+			<tr>
+				<td>Child</td>
+				<td>10</td>
+				<td>1</td>
+				<td>Half-step</td>
+			</tr>
+		</table><br>
+		<label>Time Lapsed: {{time_lapse}} </label><br><br>
 </body>
 </html>
