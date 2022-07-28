@@ -24,7 +24,7 @@ def osscilate(rpm,steps):
     
 def step_run():
     rpm = int(rpmText.value)
-    steps = int(stepText.value)
+    steps = float(stepText.value)
     if steps > 0:
         motorF(rpm,steps)
     elif steps < 0:

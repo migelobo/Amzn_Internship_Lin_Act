@@ -104,8 +104,8 @@ def Stepper_motor():
     checkbox = request.forms.get('breathe')
     
     checkbox = bool(checkbox)
-    stepCount = int(stepCount)
-    rpm = rpm = int(rpm)
+    stepCount = float(stepCount)
+    rpm = rpm = float(rpm)
     stepType = int(stepType)
     direction = int(direction)
     
