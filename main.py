@@ -1,6 +1,7 @@
 from bottle import *
 import time
 import RPi.GPIO as GPIO
+from RpiMotorLib import RpiMotorLib
 
 GPIO.setmode(GPIO.BOARD)
 
@@ -13,7 +14,9 @@ fs_GPins = [15,11,13,12]
 
 hs_revGPins = [13,11,15,12]
 hs_GPins = [12,15,11,13]
+GPins = [27,17,22,18]
 
+# motortest = RpiMotorLib.BYJMotor("MotorOne","Nema")
 HOST = '192.168.35.213'
 
 def time_convert(sec):
@@ -68,13 +71,30 @@ def half_step():
             [1,0,0,1]]  
     return seq
     
-def movement(stepCount,count,pin_order,seq,base,rpm):
+def movement2(stepCount,count,pin_order,seq,base,rpm):
+
     for i in range(stepCount):
             for step_type in range(count):
                 for pin in range(4):
                     GPIO.output(pin_order[pin],seq[step_type][pin])
                     time.sleep(base/rpm)
 
+def movement1(stepCount,direction,stepType,base,rpm):
+    if base == .075:
+        base = .3
+    elif base == .0375:
+        base = .15
+
+    if direction == 1:
+        if stepType == 1:
+            motortest.motor_run(GPins, (base/rpm), stepCount, True, False, "full")
+        elif stepType ==0:
+            motortest.motor_run(GPins, (base/rpm), stepCount, True, False, "half")
+    elif direction == 0:
+        if stepType == 1:
+            motortest.motor_run(GPins, (base/rpm), stepCount, False, False, "full")
+        elif stepType == 0:    
+            motortest.motor_run(GPins, (base/rpm), stepCount, False, False, "half")
 @route('/static/<filepath:path>')
 def serve_files(filepath):
     return static_file(filepath, root='/home/pi/Linear_Actuator/static')
@@ -104,7 +124,7 @@ def Stepper_motor():
     checkbox = request.forms.get('breathe')
     
     checkbox = bool(checkbox)
-    stepCount = float(stepCount)
+    stepCount = int(stepCount)
     rpm = rpm = float(rpm)
     stepType = int(stepType)
     direction = int(direction)
@@ -117,6 +137,7 @@ def Stepper_motor():
     
     
     if direction == 1:
+        revdirection = 0
         if stepType == 1:
             pin_order = fs_forward()
             rev_pin_order = fs_backward()
@@ -130,6 +151,7 @@ def Stepper_motor():
             base = .0375
             count = 8
     elif direction == 0:
+        revdirection = 1
         if stepType ==1:
             pin_order = fs_backward()
             rev_pin_order = fs_forward()
@@ -147,14 +169,17 @@ def Stepper_motor():
     global time_lp
     if breaths == None:
         start_time = time.time()
-        movement(stepCount,count,pin_order,seq,base,rpm)
+        movement2(stepCount,count,pin_order,seq,base,rpm)
+        # movement1(stepCount,direction,stepType,base,rpm)
         end_time = time.time()
         time_lp = time_convert(end_time-start_time)
     elif breaths != None:
         for number in range(breaths):
             start_time = time.time()
-            movement(stepCount,count,pin_order,seq,base,rpm)
-            movement(stepCount,count,rev_pin_order,seq,base,rpm)
+            # movement1(stepCount,direction,stepType,base,rpm)
+            # movement1(stepCount,revdirection,stepType,base,rpm)
+            movement2(stepCount,count,pin_order,seq,base,rpm)
+            movement2(stepCount,count,rev_pin_order,seq,base,rpm)
             end_time = time.time()
             time_lp = time_convert(end_time-start_time)
     redirect("/")
