@@ -20,10 +20,41 @@
 	<p style="text-align:center;">This project takes in user input for steps, RPM, and step size to move a stepper motor. Please fill in all areas before submitting</p>
 	
 	<section class="container">
-	<div class="one">
+
+	<div class = "left">
+		<h2>How to Play</h2>
+		<label><strong>Amplitude:</strong>
+			<small> 
+				The distance (in mm) the stepper <br>
+				motor oscillates back and forth to simulate breathing
+			</small></label><br><br>
+		<label><strong>RPM: </strong>
+			<small>
+				This is known as revolutions per minute; or <br>
+				how many full rotations the stepper makes in one<br>
+				minute. This is how speed is modified in the simulator
+			</small>
+		</label><br><br>
+		<label> <strong>Step Type:</strong>
+			<small>
+				This is changes the total amount of degrees<br>
+				the shaft rotates in a given step.<br>
+				<b>Full-Step:</b> Shaft rotates 1.8<sup>o</sup> each step<br>
+				<b>Half-Step:</b> Shaft rotates .9<sup>o</sup> each step<br>
+			</small>
+		</label>
+		
+		<h3>Terminology/Conversions</h3>
+		
+		
+		
+		
+	</div>
+
+	<div class="center">
 		<form action="/Stepper_motor", method="post" target="_blank">
 	 
-		<label for="steps">Steps:</label>
+		<label for="steps">Amplitude:</label>
 			<input type="text" id="steps" name="steps"><br><br>
 
 		 <label for="rpm">RPM:</label>
@@ -53,14 +84,12 @@
 		</form>
 		<br>
 	</div>
-	</section>
-	
-	<section class="container">
-	<div class="two">
+
+	<div class="right">
 		<table>
 			<tr>
 				<th>Breathing Pattern</th>
-				<th>Steps</th>
+				<th>Amplitude</th>
 				<th>RPM</th>
 				<th>Step Type</th>
 			</tr>
@@ -90,5 +119,6 @@
 			</tr>
 		</table><br>
 		<label>Time Lapsed: {{time_lapse}} </label><br><br>
+	</div>
 </body>
 </html>

@@ -6,6 +6,25 @@ h1 {
   font-family: Helvetica;
   text-align: center;
   margin: 0 0 20px;
+  font-size: 50px;
+  padding: 10px;
+}
+
+h2 {
+  color: #0F2D49;
+  font-family: Helvetica;
+  font-size: 30px;
+  text-align: center;
+  margin: 0 0 0px;
+  padding: 10px;
+}
+
+h3 {
+  color: #0F2D49;
+  font-family: Helvetica;
+  font-size: 20px;
+  text-align: center;
+  margin: 0 0 0px;
   padding: 10px;
 }
 
@@ -67,7 +86,7 @@ input[type="radio"] + label {
     font-size: 14px;
 }
 
-.container {
+/* .container {
   margin: auto;
 }
 
@@ -82,7 +101,14 @@ input[type="radio"] + label {
   margin-left: 30%;
   height: 200px;
   
+} */
+
+.container{
+  display: flex;
+  column-gap: 5em;
+  justify-content: center;
 }
+
 
 footer {
   background-color: gray;
