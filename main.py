@@ -115,8 +115,8 @@ def index():
     return template('/home/pi/Linear_Actuator/main.tpl', **my_data)
 
 
-@route('/Stepper_motor', method='POST')
-def Stepper_motor():
+@route('/Debug_Stepper', method='POST')
+def Debug_stepper():
     stepCount = request.forms.get('steps')
     rpm = request.forms.get('rpm')
     stepType = request.forms.get('step_type')
