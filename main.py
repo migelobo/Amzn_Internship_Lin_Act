@@ -1,3 +1,4 @@
+from urllib import request
 from bottle import *
 import time
 import RPi.GPIO as GPIO
@@ -72,7 +73,6 @@ def half_step():
     return seq
     
 def movement2(stepCount,count,pin_order,seq,base,rpm):
-
     for i in range(stepCount):
             for step_type in range(count):
                 for pin in range(4):
@@ -95,6 +95,8 @@ def movement1(stepCount,direction,stepType,base,rpm):
             motortest.motor_run(GPins, (base/rpm), stepCount, False, False, "full")
         elif stepType == 0:    
             motortest.motor_run(GPins, (base/rpm), stepCount, False, False, "half")
+
+
 @route('/static/<filepath:path>')
 def serve_files(filepath):
     return static_file(filepath, root='/home/pi/Linear_Actuator/static')
@@ -113,6 +115,27 @@ def index():
         }
     print(time_lp)
     return template('/home/pi/Linear_Actuator/main.tpl', **my_data)
+
+
+@route('/Stepper_motor', method='POST')
+def Stepper_motor():
+    amplitude = request.forms.get('amplitude')
+    rpm = request.forms.get('rpm')
+    stepCount = 10*amplitude
+    count = 8
+    pin_order = hs_forward()
+    rev_pin_order = hs_backward()
+    seq = half_step()
+    base = .0375
+    global temp
+    temp = False
+    global time_lp
+
+    start_time = time.time()
+    movement2(stepCount,count,pin_order,seq,base,rpm)
+    movement2(stepCount,count,rev_pin_order,seq,base,rpm)
+    end_time = time.time()
+    time_lp = time_convert(end_time-start_time)
 
 
 @route('/Debug_Stepper', method='POST')
@@ -134,7 +157,7 @@ def Debug_stepper():
         breaths = int(breaths)
     else:
         breaths = None
-    
+    redirect("/")
     
     if direction == 1:
         revdirection = 0
@@ -164,9 +187,11 @@ def Debug_stepper():
             seq = half_step()
             base = .0375
             count = 8
+    
     global temp
     temp = False
     global time_lp
+    
     if breaths == None:
         start_time = time.time()
         movement2(stepCount,count,pin_order,seq,base,rpm)
