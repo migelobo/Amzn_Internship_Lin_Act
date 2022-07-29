@@ -28,6 +28,14 @@ h3 {
   padding: 10px;
 }
 
+h4{
+  color: #0F2D49;
+  display: inline;
+  font-family: Helvetica;
+  font-size: 20px;
+  margin: 0 0 0px;
+}
+
 p {
   color: #20609c;
   font-size:18px;
@@ -37,6 +45,31 @@ label{
 	font-size: 16px;
 	font-family: Cambria;
 }
+
+.label1 {
+  padding: 7px 13px;
+  margin: 0 0 0px 0;
+  cursor: pointer;
+  border-radius: 3px;
+  color: #FFF;
+  transition: ease .5s;
+  position: relative; /* ADDING THIS IS REQUIRED */
+}
+.label1::after {
+  content: '+';
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  right: 10px;
+  top: 2px;
+}
+input:checked + .label1::after {
+  font-size: 30px;
+  content: '-';
+  right: 12px;
+  top: -5px;
+}
+
 
 table{
   border-collapse: collapse;
@@ -86,29 +119,16 @@ input[type="radio"] + label {
     font-size: 14px;
 }
 
-/* .container {
-  margin: auto;
-}
-
-.one {
-  width: 30%;
-  height: 200px;
-  float: left;
-  padding: 0 70px;
-}
-
-.two {
-  margin-left: 30%;
-  height: 200px;
-  
-} */
-
-.container{
+.top_container{
   display: flex;
   column-gap: 5em;
   justify-content: center;
 }
 
+.bottom_container{
+  padding: 30px;
+
+}
 
 footer {
   background-color: gray;
