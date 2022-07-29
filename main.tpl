@@ -20,11 +20,21 @@
 			debug.style.display = debug_request.checked ? "block" : "none";
 		}
 	</script>
+	<script>
+		function moveNumbers(number){
+			var Row = document.getElementById(number.toString());
+			var cells = Row.getElementsByTagName("td");
+			document.getElementById("amplitude").value=cells[1].innerText;
+			document.getElementById("rpm").value=cells[2].innerText;
+		}
+	</script>
 </head>
 <body>
 	<h1> Stepper Simulations</h1>
 	
-	<p style="text-align:center;">This project takes in user input for steps, RPM, and step size to move a stepper motor. Please fill in all areas before submitting</p>
+	<p style="text-align:center;">This project facilitates a stepper motors capabilities to test accuracy of any motion tracking chipset's ouput<br>
+	compared to the user inputed values  
+	</p>
 	
 	<section class="top_container">
 		<div class="left">
@@ -33,24 +43,40 @@
 			
 			<label><strong>Amplitude:</strong>
 				<small> 
-					The distance (in mm) the stepper <br>
-					motor oscillates back and forth to simulate breathing
+					The distance (in mm) the motor will <br>
+					will travel back and forth to simulate breathing
 				</small></label><br><br>
 			<label><strong>Speed: </strong>
 				<small>
-					This is known as revolutions per minute; or <br>
-					how many full rotations the stepper makes in one<br>
-					minute. This is how speed is modified in the simulator
+					Speed is esablished by how many revolutions <br>
+					you want the motor to make in a minute or RPM
 				</small>
 			</label><br><br>
-			<label><strong>Number of Breaths:</strong></label>
+			<label><strong>Number of Breaths:</strong>
 				<small>
-					Number of times you want the<br>
-					motor to oscillate back and forth to simulate a "breath"
+					Total number of oscillations <br>
+					the motor will make to simulate a "breath"
 				</small>
-			
+			</label><br><br>
+			<label><strong>Simulation Presets:</strong>
+				<small>
+					These are previously tested<br>
+					values that simulate a specific breathing pattern.<br>
+					Clicking on one will auto-fill text box and leave you <br>
+					to input number of breaths
+				</small>
+
+
+			</label>
 			
 			<h3>Additional Information</h3>
+			<label><strong>Debugging Tab:</strong>
+				<small>
+					For those familiar with stepper motor<br>
+					functionality, debugging allows you to control: number of<br>
+					steps, RPM, step-type, and direction of motor.
+				</small>
+			</label><br><br>
 			<label><strong>Conversions:</strong></label><br>
 				<small>1mm = 10 steps<br>
 				50 steps = 1 full rotation
@@ -73,10 +99,10 @@
 			<form action="/Stepper_motor", method="post" target="_blank">
 		
 			<label for="amplitude"><b>Amplitude:</b></label>
-				<input type="text" id="amplitude" name="amplitude" size="4"><small> mm</small><br><br>
+				<input type="text" id="amplitude" name="amplitude" size="4"><small> <b>mm</b></small><br><br>
 
 			<label for="rpm"><b>Speed:</b></label>
-				<input type="text" id="rpm" name="rpm" size="4"> <small>RPM</small><br><br>
+				<input type="text" id="rpm" name="rpm" size="4"> <small><b>RPM</b></small><br><br>
 			
 			<label for="number_breaths" id="breath_label"><b>Number of Breaths:</b></label>
 				<input type="text" id="number_breaths" name="number_breaths" size="5"><br><br>
@@ -115,34 +141,37 @@
 		</div>
 
 		<div class="right">
+			<h4>Simulation Presets</h4>
+			<hr/>
 			<table>
 				<tr>
 					<th>Breathing Pattern</th>
 					<th>Amplitude</th>
 					<th>RPM</th>
 				</tr>
-				<tr>
+				<tr id=one onclick="moveNumbers(this.id)">
 					<td>Adult</td>
 					<td>50</td>
 					<td>5</td>
 				</tr>
-				<tr>
+				<tr id=two onclick="moveNumbers(this.id)">
 					<td>Stressed Adult</td>
 					<td>60</td>
 					<td>8</td>
 				</tr>
-				<tr>
+				<tr id=three onclick="moveNumbers(this.id)">
 					<td>Elder</td>
 					<td>30</td>
 					<td>3</td>			
 				</tr>
-				<tr>
+				<tr id=four onclick="moveNumbers(this.id)">
 					<td>Child</td>
 					<td>10</td>
 					<td>1</td>
 				</tr>
 			</table><br>
-			<label>Time Lapsed: {{time_lapse}} </label><br><br>
+			<label>Time Lapsed: {{time_lapse}} </label><br>
+			<label>Steps: {{steps_oscillated}}</label>
 		</div>
 	</section>
 	<!--
