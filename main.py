@@ -15,6 +15,7 @@ fs_GPins = [15,11,13,12]
 
 hs_revGPins = [13,11,15,12]
 hs_GPins = [12,15,11,13]
+
 GPins = [27,17,22,18]
 
 # motortest = RpiMotorLib.BYJMotor("MotorOne","Nema")
@@ -119,14 +120,16 @@ def index():
 
 @route('/Stepper_motor', method='POST')
 def Stepper_motor():
-    amplitude = request.forms.get('amplitude')
-    rpm = request.forms.get('rpm')
+    amplitude = int(request.forms.get('amplitude'))
+    rpm = float(request.forms.get('rpm'))
+
     stepCount = 10*amplitude
     count = 8
     pin_order = hs_forward()
     rev_pin_order = hs_backward()
     seq = half_step()
     base = .0375
+
     global temp
     temp = False
     global time_lp
@@ -136,7 +139,7 @@ def Stepper_motor():
     movement2(stepCount,count,rev_pin_order,seq,base,rpm)
     end_time = time.time()
     time_lp = time_convert(end_time-start_time)
-
+    redirect("/")
 
 @route('/Debug_Stepper', method='POST')
 def Debug_stepper():
@@ -156,8 +159,7 @@ def Debug_stepper():
         breaths = request.forms.get('number_breaths')
         breaths = int(breaths)
     else:
-        breaths = None
-    redirect("/")
+        breaths = None 
     
     if direction == 1:
         revdirection = 0
