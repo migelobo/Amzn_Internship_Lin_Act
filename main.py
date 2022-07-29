@@ -1,3 +1,4 @@
+from re import A
 from urllib import request
 from bottle import *
 import time
@@ -6,10 +7,10 @@ from RpiMotorLib import RpiMotorLib
 
 GPIO.setmode(GPIO.BOARD)
 
-global time_lp,temp
+global time_lp,temp,steps
 temp = True
 time_lp = 0
-
+steps = 0
 fs_revGPins = [12,13,11,15]
 fs_GPins = [15,11,13,12]
 
@@ -108,11 +109,14 @@ def index():
     
     if temp:
         time_lapse = 0
+        steps_oscillated = 0
     else:
         time_lapse = time_lp
+        steps_oscillated = steps
     
     my_data = {
-        'time_lapse': time_lapse
+        'time_lapse': time_lapse,
+        'steps_oscillated': steps_oscillated
         }
     print(time_lp)
     return template('/home/pi/Linear_Actuator/main.tpl', **my_data)
@@ -122,7 +126,7 @@ def index():
 def Stepper_motor():
     amplitude = int(request.forms.get('amplitude'))
     rpm = float(request.forms.get('rpm'))
-
+    breaths = int(request.forms.get('number_breaths'))
     stepCount = 10*amplitude
     count = 8
     pin_order = hs_forward()
@@ -133,12 +137,15 @@ def Stepper_motor():
     global temp
     temp = False
     global time_lp
+    global steps
 
     start_time = time.time()
-    movement2(stepCount,count,pin_order,seq,base,rpm)
-    movement2(stepCount,count,rev_pin_order,seq,base,rpm)
+    for number in range(breaths):
+        movement2(stepCount,count,pin_order,seq,base,rpm)
+        movement2(stepCount,count,rev_pin_order,seq,base,rpm)
     end_time = time.time()
     time_lp = time_convert(end_time-start_time)
+    steps = stepCount
     redirect("/")
 
 @route('/Debug_Stepper', method='POST')
