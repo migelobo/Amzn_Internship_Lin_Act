@@ -35,7 +35,7 @@
 	<p style="text-align:center;">This project facilitates a stepper motors capabilities to test accuracy of any motion tracking chipset's ouput<br>
 	compared to the user inputed values  
 	</p>
-	
+
 	<section class="top_container">
 		<div class="left">
 			<h2>How to Play</h2>
@@ -99,13 +99,13 @@
 			<form action="/Stepper_motor", method="post" target="_blank">
 		
 			<label for="amplitude"><b>Amplitude:</b></label>
-				<input type="text" id="amplitude" name="amplitude" size="4"><small> <b>mm</b></small><br><br>
+				<input type="number" id="amplitude" name="amplitude" min="1" max="210" required><small> <b>mm</b></small><br><br>
 
 			<label for="rpm"><b>Speed:</b></label>
-				<input type="text" id="rpm" name="rpm" size="4"> <small><b>RPM</b></small><br><br>
+				<input type="number" id="rpm" name="rpm" min="1" max = "100" required> <small><b>RPM</b></small><br><br>
 			
 			<label for="number_breaths" id="breath_label"><b>Number of Breaths:</b></label>
-				<input type="text" id="number_breaths" name="number_breaths" size="5"><br><br>
+				<input type="number" id="number_breaths" name="number_breaths" min="1" max="1000" required><br><br>
 			
 			<input type="submit" class="myButton" value="Submit">
 			</form><br><br>
@@ -118,19 +118,19 @@
 			<form action="/Debug_Stepper", method="post" target="_blank">
 
 				<label for="steps">Steps:</label>
-					<input type="text" id="steps" name="steps" size="4">
+					<input type="number" id="steps" name="steps" min="1" max="2120" required>
 	
 				<label for="rpm">RPM:</label>
-					<input type="text" id="rpm" name="rpm" size="4"><br><br>
+					<input type="number" id="rpm" name="rpm" min="1" max="100" required><br><br>
 					
 				<label>Select your step type</label><br>
-				<input type="radio" id="full_step" name="step_type" value="1">
+				<input type="radio" id="full_step" name="step_type" value="1" required>
 					<label for="full_step" >Full-step</label><br>
 				<input type="radio" id="half_step" name="step_type" value="0">
 					<label for="half_step" >Half-step</label><br><br>
 
 				<label>Select a direction</label><br>
-				<input type="radio" id="forward" name="direction" value="1">
+				<input type="radio" id="forward" name="direction" value="1" required>
 					<label for="forward" >Forward</label><br>
 				<input type="radio" id="backward" name="direction" value="0">
 					<label for="backward">Backward</label><br><br>
