@@ -134,6 +134,11 @@ def Stepper_motor():
     seq = half_step()
     base = .0375
 
+    if amplitude > 220:
+        redirect("/")
+    if rpm > 100:
+        redirect("/")
+    
     global temp
     temp = False
     global time_lp
