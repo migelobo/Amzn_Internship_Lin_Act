@@ -44,12 +44,14 @@
 			<label><strong>Amplitude:</strong>
 				<small> 
 					The distance (in mm) the motor will <br>
-					will travel back and forth to simulate breathing
+					will travel back and forth to simulate breathing<br>
+					<b>Min/Max:</b> 1/210
 				</small></label><br><br>
 			<label><strong>Speed: </strong>
 				<small>
 					Speed is esablished by how many revolutions <br>
-					you want the motor to make in a minute or RPM
+					you want the motor to make in a minute or RPM<br>
+					<b>Min/Max:</b> 1/100
 				</small>
 			</label><br><br>
 			<label><strong>Number of Breaths:</strong>
