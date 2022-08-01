@@ -153,22 +153,22 @@
 				</tr>
 				<tr id=one onclick="moveNumbers(this.id)">
 					<td>Adult</td>
-					<td>50</td>
+					<td>5</td>
 					<td>5</td>
 				</tr>
 				<tr id=two onclick="moveNumbers(this.id)">
 					<td>Stressed Adult</td>
-					<td>60</td>
+					<td>6</td>
 					<td>8</td>
 				</tr>
 				<tr id=three onclick="moveNumbers(this.id)">
 					<td>Elder</td>
-					<td>30</td>
+					<td>3</td>
 					<td>3</td>			
 				</tr>
 				<tr id=four onclick="moveNumbers(this.id)">
 					<td>Child</td>
-					<td>10</td>
+					<td>1</td>
 					<td>1</td>
 				</tr>
 			</table><br>
