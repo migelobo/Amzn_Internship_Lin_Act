@@ -120,7 +120,7 @@
 			<form action="/Debug_Stepper", method="post" target="_blank">
 
 				<label for="steps">Steps:</label>
-					<input type="number" id="steps" name="steps" min="1" max="2120" required>
+					<input type="number" id="steps" name="steps" min="1" max="2120" required><br><br>
 	
 				<label for="rpm">RPM:</label>
 					<input type="number" id="rpm" name="rpm" min="1" max="100" required><br><br>
