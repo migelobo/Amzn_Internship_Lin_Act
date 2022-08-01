@@ -32,7 +32,7 @@
 <body>
 	<h1> Stepper Simulations</h1>
 	
-	<p style="text-align:center;">This project facilitates a stepper motors capabilities to test accuracy of any motion tracking chipset's ouput<br>
+	<p style="text-align:center;">This project facilitates a stepper motors capabilities to test accuracy of any motion tracking chipset's ouput,<br>
 	compared to the user inputed values  
 	</p>
 
@@ -43,15 +43,15 @@
 			
 			<label><strong>Amplitude:</strong>
 				<small> 
-					The distance (in mm) the motor will <br>
-					will travel back and forth to simulate breathing<br>
-					<b>Min/Max:</b> 1/210
+					The breath displacement(in mm) <br>
+					from start position. <br>
+					<b>Min/Max:</b> 1mm/210mm
 				</small></label><br><br>
-			<label><strong>Speed: </strong>
+			<label><strong>Rate: </strong>
 				<small>
-					Speed is esablished by how many revolutions <br>
-					you want the motor to make in a minute or RPM<br>
-					<b>Min/Max:</b> 1/100
+					The speed of the simulations measured in<br>
+					revolutions per minute or RPM<br>
+					<b>Min/Max:</b> 1RPM/100RPM
 				</small>
 			</label><br><br>
 			<label><strong>Number of Breaths:</strong>
@@ -103,7 +103,7 @@
 			<label for="amplitude"><b>Amplitude:</b></label>
 				<input type="number" id="amplitude" name="amplitude" min="1" max="210" required><small> <b>mm</b></small><br><br>
 
-			<label for="rpm"><b>Speed:</b></label>
+			<label for="rpm"><b>Rate:</b></label>
 				<input type="number" id="rpm" name="rpm" min="1" max = "100" required> <small><b>RPM</b></small><br><br>
 			
 			<label for="number_breaths" id="breath_label"><b>Number of Breaths:</b></label>
