@@ -3,7 +3,7 @@
 <head>
 	<title>Stepper Motor Breathing Simulation</title>
 	<link rel="stylesheet" type="text/css" href='/static/styles/mystyle1.css'>
-	<script>
+	<!--<script>
 	function show_breath_to_take(){
 			if(document.getElementById('breathe').checked){
 				document.getElementById('number_breaths').style.display='block';
@@ -13,7 +13,7 @@
 				document.getElementById('breath_label').style.display='none';
 			}
 	}	
-	</script>
+	</script>-->
 	 <script type="text/javascript">
 		function ShowHideDiv(debug_request) {
 			var debug = document.getElementById("debug");
@@ -41,25 +41,28 @@
 			<h2>How to Play</h2>
 			<hr/>
 			
+			<label></label>
+			
 			<label><strong>Amplitude:</strong>
 				<small> 
-					The breath displacement(in mm) <br>
+					The breath displacement (in mm) <br>
 					from start position. <br>
 					<b>Min/Max:</b> 1mm/210mm
 				</small></label><br><br>
-			<label><strong>Rate: </strong>
+			<label><strong>RPM: </strong>
 				<small>
-					The speed of the simulations measured in<br>
-					revolutions per minute or RPM<br>
-					<b>Min/Max:</b> 1RPM/100RPM
+					The number of total compressions the motor <br>
+					will do in a minute. A compression counts as a <br>
+					back and forth motion<br>
+					<b>Min/Max:</b> 1/100
 				</small>
 			</label><br><br>
 			<label><strong>Number of Breaths:</strong>
 				<small>
-					Total number of oscillations <br>
-					the motor will make to simulate a "breath"
+					Total number of repeated  <br>
+					motions the motor will make to simulate a "breath"<br>
 				</small>
-			</label><br><br>
+			</label><br>
 			<label><strong>Simulation Presets:</strong>
 				<small>
 					These are previously tested<br>
@@ -81,7 +84,9 @@
 			</label><br><br>
 			<label><strong>Conversions:</strong></label><br>
 				<small>1mm = 10 steps<br>
-				50 steps = 1 full rotation
+				50 steps = 1 full rotation<br>
+				<b>To run for "x" min: <br></b>
+				Number of Breaths = RPM * "x" min 
 				</small>
 			</label><br><br>
 			<label><strong>Step Type:</strong>
@@ -103,10 +108,10 @@
 			<label for="amplitude"><b>Amplitude:</b></label>
 				<input type="number" id="amplitude" name="amplitude" min="1" max="210" required><small> <b>mm</b></small><br><br>
 
-			<label for="rpm"><b>Rate:</b></label>
-				<input type="number" id="rpm" name="rpm" min="1" max = "100" required> <small><b>RPM</b></small><br><br>
+			<label for="rpm"><b>RPM:</b></label>
+				<input type="number" step = "0.01" id="rpm" name="rpm" min="1" max="100" required> <small><b></b></small><br><br>
 			
-			<label for="number_breaths" id="breath_label"><b>Number of Breaths:</b></label>
+			<label for="number_breaths" id="breath_label"><b> Number of Breaths:</b></label>
 				<input type="number" id="number_breaths" name="number_breaths" min="1" max="1000" required><br><br>
 			
 			<input type="submit" class="myButton" value="Submit">
@@ -123,7 +128,7 @@
 					<input type="number" id="steps" name="steps" min="1" max="2120" required><br><br>
 	
 				<label for="rpm">RPM:</label>
-					<input type="number" id="rpm" name="rpm" min="1" max="100" required><br><br>
+					<input type="text" id="rpm" name="rpm" required><br><br>
 					
 				<label>Select your step type</label><br>
 				<input type="radio" id="full_step" name="step_type" value="1" required>
