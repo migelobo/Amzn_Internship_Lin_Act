@@ -5,7 +5,7 @@ import time
 import RPi.GPIO as GPIO
 from RpiMotorLib import RpiMotorLib
 
-GPIO.setmode(GPIO.BOARD)
+#GPIO.setmode(GPIO.BOARD)
 
 global time_lp,temp,steps
 temp = True
@@ -19,7 +19,7 @@ hs_GPins = [12,15,11,13]
 
 GPins = [27,17,22,18]
 
-# motortest = RpiMotorLib.BYJMotor("MotorOne","Nema")
+motortest = RpiMotorLib.BYJMotor("MotorOne","Nema")
 HOST = '192.168.35.213'
 
 def time_convert(sec):
@@ -128,11 +128,15 @@ def Stepper_motor():
     rpm = float(request.forms.get('rpm'))
     breaths = int(request.forms.get('number_breaths'))
     stepCount = 10*amplitude
+    rev_per_min = stepCount*(.04)*rpm
     count = 8
+    stepType = 0
     pin_order = hs_forward()
     rev_pin_order = hs_backward()
     seq = half_step()
     base = .0375
+    direction=1
+    revdirection=0
 
     if amplitude > 220:
         redirect("/")
@@ -146,8 +150,10 @@ def Stepper_motor():
 
     start_time = time.time()
     for number in range(breaths):
-        movement2(stepCount,count,pin_order,seq,base,rpm)
-        movement2(stepCount,count,rev_pin_order,seq,base,rpm)
+        movement1(stepCount,direction,stepType,base,rev_per_min)
+        movement1(stepCount,revdirection,stepType,base,rev_per_min)    
+        #movement2(stepCount,count,pin_order,seq,base,rpm)
+        #movement2(stepCount,count,rev_pin_order,seq,base,rpm)
     end_time = time.time()
     time_lp = time_convert(end_time-start_time)
     steps = stepCount

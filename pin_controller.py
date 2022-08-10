@@ -64,9 +64,10 @@ def backward():
 def movement(steps,rpm,direction,stepType):
     if direction == 'f':
         pin_order = forward()
+        rev_order = backward()
     elif direction == 'b':
         pin_order = backward()
-        
+        rev_order = forward()        
     if stepType == 'fs':
         seq = full_step()
         base = .075
@@ -84,6 +85,11 @@ def movement(steps,rpm,direction,stepType):
         for step_type in range(count):
             for pin in range(4):
                 GPIO.output(pin_order[pin],seq[step_type][pin])
+                time.sleep(base/rpm)
+    for i in range(stepCount):
+        for step_type in range(count):
+            for pin in range(4):
+                GPIO.output(rev_order[pin],seq[step_type][pin])
                 time.sleep(base/rpm)
     end_time = time.time()
     time_convert(end_time-start_time)
