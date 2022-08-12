@@ -268,3 +268,6 @@ def Debug_stepper():
 
 #launches the website based on host name
 run(host=HOST, port=80, debug=True, reloader=True)
+
+#it was a pleasure working here! everyone was amazing and I learned so much, quite literally the best summer of my life
+#Best, Carlos Migelwolf Perez Valencia Romero 08/11/2022
