@@ -1,6 +1,9 @@
+/*color for the background of the website*/
 body {
 	background-color: #FFA600;
 }
+/*format for all headers used in the dashbaord colors that are used are same as
+  the ones used in the CNS team*/
 h1 {
   color: #0F2D49;
   font-family: Helvetica;
@@ -39,12 +42,13 @@ p {
   color: #20609c;
   font-size:18px;
 }
-
+/*label design design for all text in the "How to Play" and "Breathing" section*/
 label{
 	font-size: 16px;
 	font-family: Cambria;
 }
-
+/*this the label requirements for the "Debugging" tab
+  that allows us to change the "+" to a "-" and back*/
 .label1 {
   padding: 7px 13px;
   margin: 0 0 0px 0;
@@ -69,14 +73,14 @@ input:checked + .label1::after {
   top: -5px;
 }
 
-
+/*the settings for table style for rows and columns
+  along with the highlighting when hovering over them */
 table{
   border-collapse: collapse;
   border-style: solid;
   font-family: Arial, sans-serif;
 
 }
-
 th,td{
   text-align: left;
   padding: 8px
@@ -89,7 +93,7 @@ th{
 }
 
 
-
+/*the settings for the submit button style*/
 .myButton {
 	background-color:#FFD588;
 	border-radius:23px;
@@ -103,7 +107,6 @@ th{
 	text-decoration:none;
 	text-shadow:0px 1px 0px #f0db3b;
 }
-
 .myButton:hover {
 	background-color:#f0db3b;
 }
@@ -111,19 +114,19 @@ th{
 	position:relative;
 	top:1px;
 }
-
+/*settings for select choices and labels attached*/
 input[type="radio"] + label {
     color: #3C403D;
     font-family: Arial, sans-serif;
     font-size: 14px;
 }
-
+/*settings that allow for the division of the sections into 
+  three even sections*/
 .top_container{
   display: flex;
   column-gap: 5em;
   justify-content: center;
 }
-
 .bottom_container{
   padding: 30px;
 
